@@ -1,0 +1,12 @@
+aws --region us-east-2 cloudformation create-stack \
+  --stack-name the-deploy-project-staging \
+  --capabilities CAPABILITY_IAM \
+  --template-body file://./.cloudformation/stack.yml
+
+aws --region us-east-2 cloudformation update-stack \
+  --stack-name the-deploy-project-staging \
+  --capabilities CAPABILITY_IAM \
+  --template-body file://./.cloudformation/stack.yml
+
+aws --region us-east-2 cloudformation delete-stack \
+  --stack-name the-deploy-project-staging

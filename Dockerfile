@@ -10,6 +10,7 @@ RUN apk add --no-cache --update build-base \
                                 tzdata
 
 ENV APP_PATH /app/
+ENV RAILS_ENV production
 
 WORKDIR $APP_PATH
 COPY . $APP_PATH

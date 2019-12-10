@@ -19,7 +19,6 @@ jobs:
       run: |
         sudo apt-get install -y mysql-client
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
-    steps:
     - uses: actions/checkout@v1
     - name: Set up Ruby 2.4.6
       uses: actions/setup-ruby@v1

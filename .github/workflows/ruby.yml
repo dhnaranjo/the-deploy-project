@@ -7,7 +7,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+        - 3306
     steps:
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -ppassword -e "SHOW DATABASES"
     - uses: actions/checkout@v1
     - name: Set up Ruby 2.4.6
       uses: actions/setup-ruby@v1
@@ -17,4 +28,10 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+        bin/rails db:setup
         bundle exec rails test
+      env:
+        RAILS_ENV: test
+        RDS_USERNAME: root
+        RDS_PASSWORD: root
+        RDS_DB_NAME: the-deploy-project-test

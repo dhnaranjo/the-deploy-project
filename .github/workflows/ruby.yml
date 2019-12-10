@@ -11,7 +11,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: root
         ports:
         - 3306
     steps:
@@ -25,9 +25,10 @@ jobs:
       with:
         ruby-version: 2.4.6
     - name: Build and test with Rake
-      env:
-        RDS_PASSWORD: password
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rails test
+      env:
+        RDS_USERNAME: root
+        RDS_PASSWORD: root

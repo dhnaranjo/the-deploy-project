@@ -25,6 +25,8 @@ jobs:
       with:
         ruby-version: 2.4.6
     - name: Build and test with Rake
+      env:
+        RDS_PASSWORD: password
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3

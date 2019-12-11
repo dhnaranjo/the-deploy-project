@@ -11,6 +11,8 @@ jobs:
 
     - name: Checkout source code
       uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
 
     - name: Generate deployment package
       run: git archive -o deploy.zip HEAD

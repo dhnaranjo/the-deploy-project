@@ -17,6 +17,10 @@ jobs:
     - name: Generate deployment package
       run: git archive -o deploy.zip HEAD
 
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v3
       with:
@@ -24,6 +28,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: the-deploy-project
         environment_name: the-deploy-project-production
-        version_label: ${{ github.sha }}
+        version_label: ${{ steps.get_version.outputs.VERSION }}
         region: us-east-2
         deployment_package: deploy.zip
